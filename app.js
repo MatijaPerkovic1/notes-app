@@ -1,3 +1,7 @@
 const notes = require('./notes');
+const chalk = require('chalk');
 
-console.log(notes.getNotes());
+const msg = notes.getNotes();
+
+console.log(msg);
+console.log(chalk.blue('I\'m blue dabudidabuda'));
