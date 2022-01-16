@@ -1,10 +1,12 @@
-const notes = require('./notes');
+// NPM modules
 const yargs = require('yargs');
-const chalk = require('chalk');
+// Custom modules
+const notes = require('./notes');
 
-// Customize yargs version
 yargs
+    // Customize yargs version
     .version('1.1.0')
+    // Add note
     .command({
         command: 'add',
         describe: 'Add a new note',
@@ -21,17 +23,25 @@ yargs
             }
         },
         handler: (argv) => {
-            console.log(`Title: ${argv.title}`);
-            console.log(`Body: ${argv.body}`);
+            notes.addNote(argv.title, argv.body);
         }
     })
+    // Remove note
     .command({
         command: 'remove',
         describe: 'Remove a note',
-        handler: () => {
-            console.log('Removing the note!')
+        builder: {
+            title: {
+                describe: 'Note title',
+                demandOption: true,
+                type: 'string'
+            },
+        },
+        handler: (argv) => {
+            notes.removeNote(argv.title);
         }
     })
+    // List notes
     .command({
         command: 'list',
         describe: 'List the notes',
@@ -39,6 +49,7 @@ yargs
             console.log('Listing the notes!')
         }
     })
+    // Read note
     .command({
         command: 'read',
         describe: 'Read a note',
