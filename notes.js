@@ -1,16 +1,27 @@
+// NPM modules
 const fs = require('fs');
 const chalk = require('chalk');
 
-const getNotes = () => {
-    return 'Your notes...';
+const readNote = (title) => {
+    const notes = loadNotes();
+
+    const note = notes.find(x => x.title === title);
+
+    if (!note) {
+        console.log(chalk.red.inverse(`Note with title "${title}" not found!`));
+        return;
+    }
+
+    console.log(chalk.blue.inverse(note.title));
+    console.log(note.body);
 };
 
 const addNote = (title, body) => {
     const notes = loadNotes();
 
-    const duplicateNotes = notes.filter(note => note.title === title);
+    const duplicateNote = notes.find(note => note.title === title);
 
-    if(duplicateNotes.length > 0) {
+    if (duplicateNote) {
         console.log(chalk.red.inverse(`Note with title "${title}" already exists.`));
         return;
     }
@@ -68,8 +79,8 @@ const saveNotes = (notes) => {
 }
 
 module.exports = {
-    getNotes,
     addNote,
     removeNote,
-    listNotes
+    listNotes,
+    readNote
 };
